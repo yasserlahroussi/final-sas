@@ -1,10 +1,9 @@
 let candidat = []
-let objet = {}
 p = require('prompt-sync')();
 let chois = 0
 
-function FC1(table, objet) {
-    console.log("vous avez choisi 1:")
+function ajoute_candidate(candidat) {
+    let objet = {}
     console.log("pour ajouter un candidat entrer les info :")
     let cin = p("Cin : ")
     let name = p("Nom : ")
@@ -18,7 +17,7 @@ function FC1(table, objet) {
     objet.partiPolitique = partiPolitique
     objet.age = age
     objet.electeurs = electeurs
-    table.push(objet)
+    candidat.push(objet)
 }
 
 do {
@@ -35,20 +34,23 @@ do {
     console.log("7. Rechercher des candidats :")
     console.log("8. Statistiques de l'élection :")
     console.log("0.quitter :")
-    chois = Number(p("choisi un numero pour continue......"))
+    chois = Number(p("choisi un numero pour continue : "))
     switch (chois) {
         case 1:
             console.clear
-            FC1(candidat, objet)
+            ajoute_candidate(candidat)
             break;
         case 2:
             console.clear
             let chois1
             do {
-                FC1(candidat, objet)
+                ajoute_candidate(candidat)
                 console.log("ecrit 0 pour retour a la liste principal :")
                 chois1 = p("ajouter un autre candida (ecrit 1) : ")
             } while (chois1 != 0);
+            break;
+        case 3:
+            console.table(candidat);
 
         default:
             break;
