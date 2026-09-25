@@ -101,6 +101,41 @@ function trier(table) {
     }
 }
 
+function corriger(table) {
+    let corriger;
+    console.log("Modifier le parti politique d'un candidat (choisi 1) : ")
+    console.log("Modifier l'âge d'un candidat (choisi 2) :")
+    corriger = Number(p("choisi : "))
+    switch (corriger) {
+        case 1:
+            let cin_can
+            let modification_de_partie
+            cin_can = p("entrer votre cin :")
+            modification_de_partie = p("modification de partie politique : ")
+            for (let i = 0; i < table.length; i++) {
+                if (table[i].Cin == cin_can) {
+                    table[i].partiPolitique = modification_de_partie
+                }
+            }
+            console.log("modification enregistrer .")
+            break;
+        case 2:
+            let cin_can1
+            let modification_de_age
+            cin_can1 = p("entrer votre cin :")
+            modification_de_age = Number(p("modification de age : "))
+            for (let i = 0; i < table.length; i++) {
+                if (table[i].Cin == cin_can1) {
+                    table[i].age = modification_de_age
+                }
+            }
+            console.log("modification enregistrer .")
+            break;
+        default:
+            console.log("chois incorrect")
+            break;
+    }
+}
 
 do {
     console.log("=================================")
@@ -138,9 +173,14 @@ do {
         case 4:
             voter(candidat)
             console.table(candidat)
-
+            break;
+        case 5:
+            corriger(candidat)
+            console.table(candidat)
+            break;
 
         default:
+
             break;
     }
 
