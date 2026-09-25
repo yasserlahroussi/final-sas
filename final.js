@@ -42,7 +42,6 @@ function voter(candidat) {
             return
         }
         bool = false
-
     }
     if (bool == false) {
         console.log("chois incorrect")
@@ -50,28 +49,54 @@ function voter(candidat) {
 
 }
 
-function trier(candidat) {
+function trier(table) {
     console.log("pour afficher liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
     console.log("pour afficher uniquement les candidats d'un parti politique spécifique veuillez choisir 2 : ")
     let chois3 = Number(p("votre chois : "))
     switch (chois3) {
         case 1:
-            let max
-            for (let i = 0; i < candidat.electeurs.length - 1; i++) {
-                for (let j = i + 1; j < candidat.electeurs.length; j++) {
-
-                    if (candidat.electeurs[i] > candidat.electeurs[j]) {
-                        max = candidat.electeurs[i]
-                        candidat.electeurs[i] = candidat.electeurs[j]
-                        candidat.electeurs[j] = max
+            for (let i = 0; i < table.length - 1; i++) {
+                for (let j = i + 1; j < table.length; j++) {
+                    let max
+                    if (table[i].electeurs.length < table[j].electeurs.length) {
+                        max = table[i]
+                        table[i] = table[j]
+                        table[j] = max
                     }
-
                 }
             }
+            for (let i = 0; i < table.length; i++) {
+                console.log(`#  CANDIDAT ${i+1}: `)
+                console.log("CIN : " + table[i].Cin)
+                console.log("Name : " + table[i].name)
+                console.log("Prenom : " + table[i].prenom)
+                console.log("Age: " + table[i].age)
+                console.log("Partie politique : " + table[i].partiPolitique)
+                console.log("Nombre de vote : " + table[i].electeurs.length)
+                console.log("")
+                console.log("-------------")
 
+            }
             break;
-
+        case 2:
+            let partiPolitique3
+            partiPolitique3 = p("entrer la partie politique pour voir les candidats : ")
+            for (let i = 0; i < table.length; i++) {
+                if (partiPolitique3 === table[i].partiPolitique) {
+                    console.log(`#  CANDIDAT ${i+1}: `)
+                    console.log("CIN : " + table[i].Cin)
+                    console.log("Name : " + table[i].name)
+                    console.log("Prenom : " + table[i].prenom)
+                    console.log("Age: " + table[i].age)
+                    console.log("Partie politique : " + table[i].partiPolitique)
+                    console.log("Nombre de vote : " + table[i].electeurs.length)
+                    console.log("")
+                    console.log("-------------")
+                }
+            }
+            break;
         default:
+            console.log("chois incorrect")
             break;
     }
 }
@@ -101,19 +126,14 @@ do {
             console.clear
             let chois1
             chois1 = Number(p("Nombre de candida que vous voulez ajouter : "))
-                // console.log("ecrit 0 pour retour a la liste principal :")
-                // if (chois1 = 1) {
-                //     do {
-                //         ajoute_candidate(candidat)
-
-            //     } while (chois1 != 0);
-            // }
             for (let i = chois1; i > 0; i--) {
                 ajoute_candidate(candidat)
             }
 
             break;
         case 3:
+            console.clear
+            trier(candidat)
             break;
         case 4:
             voter(candidat)
