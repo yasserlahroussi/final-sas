@@ -9,7 +9,7 @@ function ajoute_candidate(candidat) {
     let name = p("Nom : ")
     let prenom = p("Prenom : ")
     let partiPolitique = p("La partie politique : ")
-    let age = p("Age : ")
+    let age = Number(p("Age : "))
     let electeurs = []
     objet.Cin = cin
     objet.name = name
@@ -19,6 +19,63 @@ function ajoute_candidate(candidat) {
     objet.electeurs = electeurs
     candidat.push(objet)
 }
+
+function voter(candidat) {
+    console.table(candidat)
+    let cincard;
+    let perso;
+    perso = p("entrer votre cin :")
+    for (let i = 0; i < candidat.length; i++) {
+        for (let j = 0; j < candidat[i].electeurs.length; j++) {
+            if (perso == candidat[i].electeurs[j]) {
+                console.log("vous ne pouvez pas voter")
+                return
+            }
+        }
+    }
+    let bool = true
+    cincard = p("entrer la cin de cardinal :")
+    for (let i = 0; i < candidat.length; i++) {
+        if (cincard == candidat[i].Cin) {
+            candidat[i].electeurs.push(perso)
+            console.log("votre vote enregistree")
+            return
+        }
+        bool = false
+
+    }
+    if (bool == false) {
+        console.log("chois incorrect")
+    }
+
+}
+
+function trier(candidat) {
+    console.log("pour afficher liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
+    console.log("pour afficher uniquement les candidats d'un parti politique spécifique veuillez choisir 2 : ")
+    let chois3 = Number(p("votre chois : "))
+    switch (chois3) {
+        case 1:
+            let max
+            for (let i = 0; i < candidat.electeurs.length - 1; i++) {
+                for (let j = i + 1; j < candidat.electeurs.length; j++) {
+
+                    if (candidat.electeurs[i] > candidat.electeurs[j]) {
+                        max = candidat.electeurs[i]
+                        candidat.electeurs[i] = candidat.electeurs[j]
+                        candidat.electeurs[j] = max
+                    }
+
+                }
+            }
+
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 do {
     console.log("=================================")
@@ -43,14 +100,25 @@ do {
         case 2:
             console.clear
             let chois1
-            do {
+            chois1 = Number(p("Nombre de candida que vous voulez ajouter : "))
+                // console.log("ecrit 0 pour retour a la liste principal :")
+                // if (chois1 = 1) {
+                //     do {
+                //         ajoute_candidate(candidat)
+
+            //     } while (chois1 != 0);
+            // }
+            for (let i = chois1; i > 0; i--) {
                 ajoute_candidate(candidat)
-                console.log("ecrit 0 pour retour a la liste principal :")
-                chois1 = p("ajouter un autre candida (ecrit 1) : ")
-            } while (chois1 != 0);
+            }
+
             break;
         case 3:
-            console.table(candidat);
+            break;
+        case 4:
+            voter(candidat)
+            console.table(candidat)
+
 
         default:
             break;
