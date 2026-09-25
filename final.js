@@ -137,6 +137,42 @@ function corriger(table) {
     }
 }
 
+function Supprimer(table) {
+    let cin_supp
+    console.log("pour supprimer votre dossier ")
+    cin_supp = p("entrer votre Cin : ")
+    for (let i = 0; i < table.length; i++) {
+        if (cin_supp == table[i].Cin) {
+            table.splice(i, i)
+        }
+    }
+    console.log("suppression complete")
+}
+
+function Rechercher(table) {
+    let name_can
+    console.log("pour rechercher un candidat ")
+    name_can = p("entrer le nom de candidat : ")
+    for (let i = 0; i < table.length; i++) {
+        if (name_can == table[i].name) {
+            console.log("-------------")
+            console.log("CIN : " + table[i].Cin)
+            console.log("Name : " + table[i].name)
+            console.log("Prenom : " + table[i].prenom)
+            console.log("Age: " + table[i].age)
+            console.log("Partie politique : " + table[i].partiPolitique)
+            console.log("Nombre de vote : " + table[i].electeurs.length)
+            console.log("")
+            console.log("-------------")
+            return
+        } else {
+            console.log("Candidat not trouvée")
+
+        }
+    }
+}
+
+
 do {
     console.log("=================================")
     console.log("*******liste principal***********")
@@ -161,8 +197,12 @@ do {
             console.clear
             let chois1
             chois1 = Number(p("Nombre de candida que vous voulez ajouter : "))
-            for (let i = chois1; i > 0; i--) {
-                ajoute_candidate(candidat)
+            if (chois1 > 1) {
+                for (let i = chois1; i > 0; i--) {
+                    ajoute_candidate(candidat)
+                }
+            } else {
+                console.log("impossible")
             }
 
             break;
@@ -177,6 +217,12 @@ do {
         case 5:
             corriger(candidat)
             console.table(candidat)
+            break;
+        case 6:
+            Supprimer(candidat)
+            break;
+        case 7:
+            Rechercher(candidat)
             break;
 
         default:
