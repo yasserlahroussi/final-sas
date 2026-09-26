@@ -6,6 +6,11 @@ function ajoute_candidate(candidat) {
     let objet = {}
     console.log("pour ajouter un candidat entrer les info :")
     let cin = p("Cin : ")
+    let age = Number(p("Age : "))
+    if (age < 18) {
+        console.log("impossible(age < 18)")
+        return
+    }
     let existe = false
     for (let i = 0; i < candidat.length; i++) {
         if (cin == candidat[i].Cin) {
@@ -14,12 +19,12 @@ function ajoute_candidate(candidat) {
         }
     }
     if (existe) {
-        console.log("impossible ajouter un candidat avec le meme Cin")
+        console.log("impossible ajouter un candidat (cin repeter)")
     } else {
         let name = p("Nom : ")
         let prenom = p("Prenom : ")
         let partiPolitique = p("La partie politique : ")
-        let age = Number(p("Age : "))
+
         let electeurs = []
         objet.Cin = cin
         objet.name = name
@@ -41,7 +46,7 @@ function voter(candidat) {
     perso = p("entrer votre cin :")
     for (let i = 0; i < candidat.length; i++) {
         for (let j = 0; j < candidat[i].electeurs.length; j++) {
-            if (perso == candidat[i].electeurs[j]) {
+            if (perso.toLowerCase() == candidat[i].electeurs[j].toLowerCase()) {
                 console.log("vous ne pouvez pas voter")
                 return
             }
@@ -50,7 +55,7 @@ function voter(candidat) {
     let bool = true
     cincard = p("entrer la cin de cardinal :")
     for (let i = 0; i < candidat.length; i++) {
-        if (cincard == candidat[i].Cin) {
+        if (cincard.toLowerCase() == candidat[i].Cin.toLowerCase()) {
             candidat[i].electeurs.push(perso)
             console.log("votre vote enregistree")
             return
@@ -96,7 +101,7 @@ function trier(table) {
             let partiPolitique3
             partiPolitique3 = p("entrer la partie politique pour voir les candidats : ")
             for (let i = 0; i < table.length; i++) {
-                if (partiPolitique3 === table[i].partiPolitique) {
+                if (partiPolitique3.toLowerCase() === table[i].partiPolitique.toLowerCase()) {
                     console.log(`#  CANDIDAT ${i+1}: `)
                     console.log("CIN : " + table[i].Cin)
                     console.log("Name : " + table[i].name)
@@ -127,7 +132,7 @@ function corriger(table) {
             cin_can = p("entrer votre cin :")
             modification_de_partie = p("modification de partie politique : ")
             for (let i = 0; i < table.length; i++) {
-                if (table[i].Cin == cin_can) {
+                if (table[i].Cin.toLowerCase() == cin_can.toLowerCase()) {
                     table[i].partiPolitique = modification_de_partie
                 }
             }
@@ -156,7 +161,7 @@ function Supprimer(table) {
     console.log("pour supprimer votre dossier ")
     cin_supp = p("entrer votre Cin : ")
     for (let i = 0; i < table.length; i++) {
-        if (cin_supp == table[i].Cin) {
+        if (cin_supp.toLowerCase() == table[i].Cin.toLowerCase()) {
             table.splice(i, 1)
         }
     }
@@ -168,7 +173,7 @@ function Rechercher(table) {
     console.log("pour rechercher un candidat ")
     name_can = p("entrer le nom de candidat : ")
     for (let i = 0; i < table.length; i++) {
-        if (name_can == table[i].name) {
+        if (name_can.toLowerCase() == table[i].name.toLowerCase()) {
             console.log("-------------")
             console.log("CIN : " + table[i].Cin)
             console.log("Name : " + table[i].name)
@@ -179,11 +184,10 @@ function Rechercher(table) {
             console.log("")
             console.log("-------------")
             return
-        } else {
-            console.log("Candidat not trouvée")
 
         }
     }
+    console.log("Candidat not trouvée")
 }
 
 function Statistique(table) {
@@ -199,7 +203,7 @@ function Statistique(table) {
         case 2:
             let somme = 0
             for (let i = 0; i < table.length; i++) {
-                somme = somme + table[i].vote.length
+                somme = somme + table[i].electeurs.length
             }
             console.log("le nombre total de toutes les votes est : " + somme)
             break;
@@ -214,7 +218,7 @@ function Statistique(table) {
                     }
                 }
             }
-            for (let i = 0; i <= 2; i++) {
+            for (let i = 0; i < table.length && i < 3; i++) {
                 console.log(`#  CANDIDAT ${i+1}: `)
                 console.log("CIN : " + table[i].Cin)
                 console.log("Name : " + table[i].name)
@@ -302,7 +306,9 @@ do {
         case 8:
             Statistique(candidat)
             break;
-
+        case 0:
+            console.log("sortie")
+            break;
         default:
             console.log("chois incorrect")
             break;
