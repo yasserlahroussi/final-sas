@@ -34,7 +34,6 @@ function ajoute_candidate(candidat) {
 }
 
 
-
 function voter(candidat) {
     console.table(candidat)
     let cincard;
@@ -158,7 +157,7 @@ function Supprimer(table) {
     cin_supp = p("entrer votre Cin : ")
     for (let i = 0; i < table.length; i++) {
         if (cin_supp == table[i].Cin) {
-            table.splice(i, i)
+            table.splice(i, 1)
         }
     }
     console.log("suppression complete")
