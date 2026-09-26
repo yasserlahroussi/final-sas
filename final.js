@@ -6,19 +6,34 @@ function ajoute_candidate(candidat) {
     let objet = {}
     console.log("pour ajouter un candidat entrer les info :")
     let cin = p("Cin : ")
-    let name = p("Nom : ")
-    let prenom = p("Prenom : ")
-    let partiPolitique = p("La partie politique : ")
-    let age = Number(p("Age : "))
-    let electeurs = []
-    objet.Cin = cin
-    objet.name = name
-    objet.prenom = prenom
-    objet.partiPolitique = partiPolitique
-    objet.age = age
-    objet.electeurs = electeurs
-    candidat.push(objet)
+    let existe = false
+    for (let i = 0; i < candidat.length; i++) {
+        if (cin == candidat[i].Cin) {
+            existe = true
+            break
+        }
+    }
+    if (existe) {
+        console.log("impossible ajouter un candidat avec le meme Cin")
+    } else {
+        let name = p("Nom : ")
+        let prenom = p("Prenom : ")
+        let partiPolitique = p("La partie politique : ")
+        let age = Number(p("Age : "))
+        let electeurs = []
+        objet.Cin = cin
+        objet.name = name
+        objet.prenom = prenom
+        objet.partiPolitique = partiPolitique
+        objet.age = age
+        objet.electeurs = electeurs
+        candidat.push(objet)
+
+    }
+
 }
+
+
 
 function voter(candidat) {
     console.table(candidat)
@@ -172,6 +187,67 @@ function Rechercher(table) {
     }
 }
 
+function Statistique(table) {
+    console.log("1 .Afficher le nombre total de candidats : ")
+    console.log("2 .Afficher le nombre total de votes exprimés dans toute l'élection : ")
+    console.log("3 .Afficher le Top 3 des candidats ayant le plus de votes : ")
+    console.log("4 .Afficher le nombre de candidats par parti politique : ")
+    let chois6 = Number(p("entrer votre chois : "))
+    switch (chois6) {
+        case 1:
+            console.log("le nombre total de candidate : " + table.length)
+            break;
+        case 2:
+            let somme = 0
+            for (let i = 0; i < table.length; i++) {
+                somme = somme + table[i].vote.length
+            }
+            console.log("le nombre total de toutes les votes est : " + somme)
+            break;
+        case 3:
+            for (let i = 0; i < table.length - 1; i++) {
+                for (let j = i + 1; j < table.length; j++) {
+                    let max
+                    if (table[i].electeurs.length < table[j].electeurs.length) {
+                        max = table[i]
+                        table[i] = table[j]
+                        table[j] = max
+                    }
+                }
+            }
+            for (let i = 0; i <= 2; i++) {
+                console.log(`#  CANDIDAT ${i+1}: `)
+                console.log("CIN : " + table[i].Cin)
+                console.log("Name : " + table[i].name)
+                console.log("Prenom : " + table[i].prenom)
+                console.log("Age: " + table[i].age)
+                console.log("Partie politique : " + table[i].partiPolitique)
+                console.log("Nombre de vote : " + table[i].electeurs.length)
+                console.log("")
+                console.log("-------------")
+
+            }
+            break;
+        case 4:
+            let partiPolitique4
+            partiPolitique4 = p("entrer la partie politique pour voir les candidats : ")
+            let count = 0
+            for (let i = 0; i < table.length; i++) {
+                if (partiPolitique4 === table[i].partiPolitique) {
+                    count++
+                    break;
+                } else {
+                    console.log("pas de resultats")
+                }
+            }
+            console.log("resultat de recherche : " + count + " candidat dans " + partiPolitique4)
+            break;
+
+
+        default:
+            break;
+    }
+}
 
 do {
     console.log("=================================")
@@ -224,9 +300,12 @@ do {
         case 7:
             Rechercher(candidat)
             break;
+        case 8:
+            Statistique(candidat)
+            break;
 
         default:
-
+            console.log("chois incorrect")
             break;
     }
 
