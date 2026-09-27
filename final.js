@@ -8,7 +8,7 @@ function ajoute_candidate(candidat) {
     let cin = p("Cin : ")
     let age = Number(p("Age : "))
     if (age < 18) {
-        console.log("impossible(age < 18)")
+        console.log("impossible")
         return
     }
     let existe = false
@@ -39,24 +39,25 @@ function ajoute_candidate(candidat) {
 }
 
 
-function voter(candidat) {
-    console.table(candidat)
+
+function voter(table) {
+    afficherlalistedescandidatures(table)
     let cincard;
     let perso;
     perso = p("entrer votre cin :")
-    for (let i = 0; i < candidat.length; i++) {
-        for (let j = 0; j < candidat[i].electeurs.length; j++) {
-            if (perso.toLowerCase() == candidat[i].electeurs[j].toLowerCase()) {
+    for (let i = 0; i < table.length; i++) {
+        for (let j = 0; j < table[i].electeurs.length; j++) {
+            if (perso.toLowerCase() == table[i].electeurs[j].toLowerCase()) {
                 console.log("vous ne pouvez pas voter")
                 return
             }
         }
     }
     let bool = true
-    cincard = p("entrer la cin de cardinal :")
-    for (let i = 0; i < candidat.length; i++) {
-        if (cincard.toLowerCase() == candidat[i].Cin.toLowerCase()) {
-            candidat[i].electeurs.push(perso)
+    cincard = p("entrer la cin de candidat  :")
+    for (let i = 0; i < table.length; i++) {
+        if (cincard.toLowerCase() == table[i].Cin.toLowerCase()) {
+            table[i].electeurs.push(perso)
             console.log("votre vote enregistree")
             return
         }
@@ -68,56 +69,95 @@ function voter(candidat) {
 
 }
 
+function maxtomin(table) {
+    for (let i = 0; i < table.length - 1; i++) {
+        for (let j = i + 1; j < table.length; j++) {
+            let max
+            if (table[i].electeurs.length < table[j].electeurs.length) {
+                max = table[i]
+                table[i] = table[j]
+                table[j] = max
+            }
+        }
+    }
+    for (let i = 0; i < table.length; i++) {
+        console.log(`#  CANDIDAT ${i+1}: `)
+        console.log("CIN : " + table[i].Cin)
+        console.log("Name : " + table[i].name)
+        console.log("Prenom : " + table[i].prenom)
+        console.log("Age: " + table[i].age)
+        console.log("Partie politique : " + table[i].partiPolitique)
+        console.log("Nombre de vote : " + table[i].electeurs.length)
+        console.log("")
+        console.log("-------------")
+
+    }
+}
+
+function flitredepartiepolitique(table) {
+    let partiPolitique3
+    partiPolitique3 = p("entrer la partie politique pour voir les candidats : ")
+    for (let i = 0; i < table.length; i++) {
+        if (partiPolitique3.toLowerCase() === table[i].partiPolitique.toLowerCase()) {
+            console.log(`#  CANDIDAT : `)
+            console.log("CIN : " + table[i].Cin)
+            console.log("Name : " + table[i].name)
+            console.log("Prenom : " + table[i].prenom)
+            console.log("Age: " + table[i].age)
+            console.log("Partie politique : " + table[i].partiPolitique)
+            console.log("Nombre de vote : " + table[i].electeurs.length)
+            console.log("_____________________________________________")
+        } else {
+            console.log("pas trouves pour changer ")
+            return
+        }
+    }
+}
+
 function trier(table) {
-    console.log("pour afficher liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
-    console.log("pour afficher uniquement les candidats d'un parti politique spécifique veuillez choisir 2 : ")
+    console.log("pour tri la liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
+    console.log("pour flitrer la liste des candidates selon la partie poltique entrer 2 : ")
     let chois3 = Number(p("votre chois : "))
     switch (chois3) {
         case 1:
-            for (let i = 0; i < table.length - 1; i++) {
-                for (let j = i + 1; j < table.length; j++) {
-                    let max
-                    if (table[i].electeurs.length < table[j].electeurs.length) {
-                        max = table[i]
-                        table[i] = table[j]
-                        table[j] = max
-                    }
-                }
-            }
-            for (let i = 0; i < table.length; i++) {
-                console.log(`#  CANDIDAT ${i+1}: `)
-                console.log("CIN : " + table[i].Cin)
-                console.log("Name : " + table[i].name)
-                console.log("Prenom : " + table[i].prenom)
-                console.log("Age: " + table[i].age)
-                console.log("Partie politique : " + table[i].partiPolitique)
-                console.log("Nombre de vote : " + table[i].electeurs.length)
-                console.log("")
-                console.log("-------------")
-
-            }
+            console.clear
+            maxtomin(table)
             break;
         case 2:
-            let partiPolitique3
-            partiPolitique3 = p("entrer la partie politique pour voir les candidats : ")
-            for (let i = 0; i < table.length; i++) {
-                if (partiPolitique3.toLowerCase() === table[i].partiPolitique.toLowerCase()) {
-                    console.log(`#  CANDIDAT ${i+1}: `)
-                    console.log("CIN : " + table[i].Cin)
-                    console.log("Name : " + table[i].name)
-                    console.log("Prenom : " + table[i].prenom)
-                    console.log("Age: " + table[i].age)
-                    console.log("Partie politique : " + table[i].partiPolitique)
-                    console.log("Nombre de vote : " + table[i].electeurs.length)
-                    console.log("")
-                    console.log("-------------")
-                }
-            }
+            console.clear
+            flitredepartiepolitique(table)
             break;
         default:
             console.log("chois incorrect")
             break;
     }
+}
+
+function modificationdeparti(table) {
+    let cin_can
+    let modification_de_partie
+    cin_can = p("entrer votre cin :")
+    modification_de_partie = p("modification de partie politique : ")
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].Cin.toLowerCase() == cin_can.toLowerCase()) {
+            table[i].partiPolitique = modification_de_partie
+            table[i].electeurs = []
+        }
+    }
+    console.log("modification enregistrer .")
+}
+
+function modificationage(table) {
+    let cin_can1
+    let modification_de_age
+    cin_can1 = p("entrer votre cin :")
+    modification_de_age = Number(p("modification de age : "))
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].Cin.toLowerCase() == cin_can1.toLowerCase()) {
+            table[i].age = modification_de_age
+        }
+    }
+    console.log("modification enregistrer .")
 }
 
 function corriger(table) {
@@ -127,32 +167,13 @@ function corriger(table) {
     corriger = Number(p("choisi : "))
     switch (corriger) {
         case 1:
-            let cin_can
-            let modification_de_partie
-            cin_can = p("entrer votre cin :")
-            modification_de_partie = p("modification de partie politique : ")
-            for (let i = 0; i < table.length; i++) {
-                if (table[i].Cin.toLowerCase() == cin_can.toLowerCase()) {
-                    table[i].partiPolitique = modification_de_partie
-                }
-            }
-            console.log("modification enregistrer .")
+            modificationdeparti(table)
             break;
         case 2:
-            let cin_can1
-            let modification_de_age
-            cin_can1 = p("entrer votre cin :")
-            modification_de_age = Number(p("modification de age : "))
-            for (let i = 0; i < table.length; i++) {
-                if (table[i].Cin == cin_can1) {
-                    table[i].age = modification_de_age
-                }
-            }
-            console.log("modification enregistrer .")
+            modificationage(table)
             break;
         default:
             console.log("chois incorrect")
-            break;
     }
 }
 
@@ -160,10 +181,15 @@ function Supprimer(table) {
     let cin_supp
     console.log("pour supprimer votre dossier ")
     cin_supp = p("entrer votre Cin : ")
+    let arrays = []
     for (let i = 0; i < table.length; i++) {
-        if (cin_supp.toLowerCase() == table[i].Cin.toLowerCase()) {
-            table.splice(i, 1)
+        if (cin_supp !== table[i].Cin) {
+            arrays.push(table[i])
         }
+    }
+    table.length = 0
+    for (let i = 0; i < arrays.length; i++) {
+        table.push(arrays[i])
     }
     console.log("suppression complete")
 }
@@ -188,6 +214,26 @@ function Rechercher(table) {
         }
     }
     console.log("Candidat not trouvée")
+}
+
+function question9(table) {
+    newarray = []
+    for (let i = 0; i < table.length; i++) {
+        newarray.push(table[i].partiPolitique)
+    }
+    for (let i = 0; i < newarray.length; i++) {
+        let count = 0
+        for (let j = i + 1; j < newarray.length; j++) {
+            if (newarray[i] == newarray[j]) {
+                newarray.splice(i, 1)
+                count++
+            }
+
+        }
+        console.log(" on a " + count + " dans " + newarray[i])
+    }
+
+
 }
 
 function Statistique(table) {
@@ -232,23 +278,49 @@ function Statistique(table) {
             }
             break;
         case 4:
-            let partiPolitique4
-            partiPolitique4 = p("entrer la partie politique pour voir les candidats : ")
-            let count = 0
-            for (let i = 0; i < table.length; i++) {
-                if (partiPolitique4 === table[i].partiPolitique) {
-                    count++
-                    break;
-                } else {
-                    console.log("pas de resultats")
-                }
-            }
-            console.log("resultat de recherche : " + count + " candidat dans " + partiPolitique4)
+            question9(candidat)
             break;
-
-
         default:
             break;
+    }
+}
+
+function ajouter(table) {
+    console.log("choisi 1 pour ajouter un candidature : ")
+    console.log("choisi 2 pour ajouter 2 a la fois : ")
+    let chois66 = Number(p("entrer votre chois : "))
+    switch (chois66) {
+        case 1:
+            console.clear
+            ajoute_candidate(table)
+            break;
+        case 2:
+            console.clear
+            let chois1
+            chois1 = Number(p("Nombre de candida que vous voulez ajouter : "))
+            if (chois1 > 1) {
+                for (let i = chois1; i > 0; i--) {
+                    ajoute_candidate(table)
+                }
+            } else {
+                console.log("impossible")
+            }
+        default:
+
+            break;
+    }
+}
+
+function afficherlalistedescandidatures(table) {
+    console.log("_____________LISTE DES CANDIDATURES___________________")
+    for (let i = 0; i < table.length; i++) {
+        console.log(`# ${i+1}`)
+        console.log("CIN : " + table[i].Cin)
+        console.log("Nom complet  : " + table[i].name + " " + table[i].prenom)
+        console.log("La Partie Politique : " + table[i].partiPolitique)
+        console.log("age : " + table[i].age)
+        console.log("nombre de vote : " + table[i].electeurs.length)
+        console.log("______________________________________________________")
     }
 }
 
@@ -258,8 +330,8 @@ do {
     console.log("=================================")
     console.log("")
     console.log("1. Ajouter un nouveau candidat :")
-    console.log("2. Ajouter plusieurs candidats à la fois.")
-    console.log("3. Afficher la liste des candidats :")
+    console.log("2. afficher la lsite des candidat :")
+    console.log("3. tri et filtre la liste des candidats : ")
     console.log("4. Voter pour un candidat :")
     console.log("5. Modifier les informations d'un candidat :")
     console.log("6. Supprimer un candidat :")
@@ -269,47 +341,54 @@ do {
     chois = Number(p("choisi un numero pour continue : "))
     switch (chois) {
         case 1:
-            console.clear
-            ajoute_candidate(candidat)
+            console.clear()
+            ajouter(candidat)
+            console.clear()
             break;
         case 2:
-            console.clear
-            let chois1
-            chois1 = Number(p("Nombre de candida que vous voulez ajouter : "))
-            if (chois1 > 1) {
-                for (let i = chois1; i > 0; i--) {
-                    ajoute_candidate(candidat)
-                }
-            } else {
-                console.log("impossible")
-            }
+            console.clear()
+            afficherlalistedescandidatures(candidat)
 
             break;
         case 3:
-            console.clear
+            console.clear()
             trier(candidat)
+
             break;
         case 4:
+            console.clear()
             voter(candidat)
-            console.table(candidat)
+
             break;
         case 5:
+            console.clear()
             corriger(candidat)
-            console.table(candidat)
+
             break;
         case 6:
+            console.clear()
             Supprimer(candidat)
+
             break;
         case 7:
+            console.clear()
             Rechercher(candidat)
+
             break;
         case 8:
+            console.clear()
             Statistique(candidat)
+
             break;
         case 0:
+            console.clear()
             console.log("sortie")
+
             break;
+        case 9:
+            question9(candidat)
         default:
+
             console.log("chois incorrect")
             break;
     }
