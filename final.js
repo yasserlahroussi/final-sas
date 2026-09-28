@@ -1,4 +1,60 @@
-let candidat = []
+const candidat = [{
+        Cin: "AB154",
+        name: "Boushaba",
+        prenom: "Soufiane",
+        partiPolitique: "Widad",
+        age: 40,
+        electeurs: [],
+    },
+    {
+        Cin: "FT624",
+        name: "Taoussi",
+        prenom: "Hanan",
+        partiPolitique: "Widad",
+        age: 32,
+        electeurs: [],
+    },
+    {
+        Cin: "WZ695",
+        name: "Rachid",
+        prenom: "tolla",
+        partiPolitique: "Raja",
+        age: 27,
+        electeurs: [],
+    },
+    {
+        Cin: "AZ584",
+        name: "Nbark",
+        prenom: "oulaarbi",
+        partiPolitique: "Raja",
+        age: 61,
+        electeurs: [],
+    },
+    {
+        Cin: "MA201",
+        name: "Salhi",
+        prenom: "Anas",
+        partiPolitique: "PPS",
+        age: 26,
+        electeurs: ["AB154"],
+    },
+    {
+        Cin: "PB645",
+        name: "Et-taya",
+        prenom: "Younes",
+        partiPolitique: "YCD",
+        age: 35,
+        electeurs: ["PB645"],
+    },
+    {
+        Cin: "UC125",
+        name: "Ben lhaj",
+        prenom: "Mohamed",
+        partiPolitique: "PAM",
+        age: 25,
+        electeurs: ["UC125", "FT624", "AZ584"],
+    }
+]
 p = require('prompt-sync')();
 let chois = 0
 
@@ -182,16 +238,24 @@ function Supprimer(table) {
     console.log("pour supprimer votre dossier ")
     cin_supp = p("entrer votre Cin : ")
     let arrays = []
+    let trust = false
     for (let i = 0; i < table.length; i++) {
         if (cin_supp !== table[i].Cin) {
             arrays.push(table[i])
+        } else {
+            trust = true
         }
     }
+    if (!trust) {
+        console.log("impossible")
+        return
+    }
+
     table.length = 0
     for (let i = 0; i < arrays.length; i++) {
         table.push(arrays[i])
     }
-    console.log("suppression complete")
+    console.log("suppresion succes")
 }
 
 function Rechercher(table) {
@@ -217,21 +281,6 @@ function Rechercher(table) {
 }
 
 function question9(table) {
-    newarray = []
-    for (let i = 0; i < table.length; i++) {
-        newarray.push(table[i].partiPolitique)
-    }
-    for (let i = 0; i < newarray.length; i++) {
-        let count = 0
-        for (let j = i + 1; j < newarray.length; j++) {
-            if (newarray[i] == newarray[j]) {
-                newarray.splice(i, 1)
-                count++
-            }
-
-        }
-        console.log(" on a " + count + " dans " + newarray[i])
-    }
 
 
 }
@@ -240,7 +289,7 @@ function Statistique(table) {
     console.log("1 .Afficher le nombre total de candidats : ")
     console.log("2 .Afficher le nombre total de votes exprimés dans toute l'élection : ")
     console.log("3 .Afficher le Top 3 des candidats ayant le plus de votes : ")
-    console.log("4 .Afficher le nombre de candidats par parti politique : ")
+
     let chois6 = Number(p("entrer votre chois : "))
     switch (chois6) {
         case 1:
@@ -277,10 +326,8 @@ function Statistique(table) {
 
             }
             break;
-        case 4:
-            question9(candidat)
-            break;
         default:
+            console.log("chois impossible")
             break;
     }
 }
