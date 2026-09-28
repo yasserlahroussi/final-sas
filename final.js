@@ -94,8 +94,6 @@ function ajoute_candidate(candidat) {
 
 }
 
-
-
 function voter(table) {
     afficherlalistedescandidatures(table)
     let cincard;
@@ -170,35 +168,24 @@ function flitredepartiepolitique(table) {
     }
 }
 
-function trier(table) {
-    console.log("pour tri la liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
-    console.log("pour flitrer la liste des candidates selon la partie poltique entrer 2 : ")
-    let chois3 = Number(p("votre chois : "))
-    switch (chois3) {
-        case 1:
-            console.clear
-            maxtomin(table)
-            break;
-        case 2:
-            console.clear
-            flitredepartiepolitique(table)
-            break;
-        default:
-            console.log("chois incorrect")
-            break;
-    }
-}
 
 function modificationdeparti(table) {
     let cin_can
     let modification_de_partie
     cin_can = p("entrer votre cin :")
     modification_de_partie = p("modification de partie politique : ")
+    let trust = false
     for (let i = 0; i < table.length; i++) {
         if (table[i].Cin.toLowerCase() == cin_can.toLowerCase()) {
             table[i].partiPolitique = modification_de_partie
             table[i].electeurs = []
+            trust = true
+            break;
         }
+    }
+    if (trust == false) {
+        console.log("imposible")
+        return
     }
     console.log("modification enregistrer .")
 }
@@ -208,29 +195,19 @@ function modificationage(table) {
     let modification_de_age
     cin_can1 = p("entrer votre cin :")
     modification_de_age = Number(p("modification de age : "))
+    let trust = false
     for (let i = 0; i < table.length; i++) {
         if (table[i].Cin.toLowerCase() == cin_can1.toLowerCase()) {
             table[i].age = modification_de_age
+            trust = true
+            break
+        }
+        if (trust == false) {
+            console.log("impossible")
+            return
         }
     }
     console.log("modification enregistrer .")
-}
-
-function corriger(table) {
-    let corriger;
-    console.log("Modifier le parti politique d'un candidat (choisi 1) : ")
-    console.log("Modifier l'âge d'un candidat (choisi 2) :")
-    corriger = Number(p("choisi : "))
-    switch (corriger) {
-        case 1:
-            modificationdeparti(table)
-            break;
-        case 2:
-            modificationage(table)
-            break;
-        default:
-            console.log("chois incorrect")
-    }
 }
 
 function Supprimer(table) {
@@ -246,7 +223,7 @@ function Supprimer(table) {
             trust = true
         }
     }
-    if (!trust) {
+    if (trust == false) {
         console.log("impossible")
         return
     }
@@ -278,11 +255,6 @@ function Rechercher(table) {
         }
     }
     console.log("Candidat not trouvée")
-}
-
-function question9(table) {
-
-
 }
 
 function Statistique(table) {
@@ -373,7 +345,7 @@ function afficherlalistedescandidatures(table) {
 
 do {
     console.log("=================================")
-    console.log("*******liste principal***********")
+    console.log("__________liste principal________")
     console.log("=================================")
     console.log("")
     console.log("1. Ajouter un nouveau candidat :")
@@ -399,7 +371,22 @@ do {
             break;
         case 3:
             console.clear()
-            trier(candidat)
+            console.log("pour tri la liste de candidat (de plus voter au moins) veuillez choisir 1 : ")
+            console.log("pour flitrer la liste des candidates selon la partie poltique entrer 2 : ")
+            let chois3 = Number(p("votre chois : "))
+            switch (chois3) {
+                case 1:
+                    console.clear
+                    maxtomin(candidat)
+                    break;
+                case 2:
+                    console.clear
+                    flitredepartiepolitique(candidat)
+                    break;
+                default:
+                    console.log("chois incorrect")
+                    break;
+            }
 
             break;
         case 4:
@@ -409,7 +396,20 @@ do {
             break;
         case 5:
             console.clear()
-            corriger(candidat)
+            let corriger;
+            console.log("Modifier le parti politique d'un candidat (choisi 1) : ")
+            console.log("Modifier l'âge d'un candidat (choisi 2) :")
+            corriger = Number(p("choisi : "))
+            switch (corriger) {
+                case 1:
+                    modificationdeparti(candidat)
+                    break;
+                case 2:
+                    modificationage(candidat)
+                    break;
+                default:
+                    console.log("chois incorrect")
+            }
 
             break;
         case 6:
