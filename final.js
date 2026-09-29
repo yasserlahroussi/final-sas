@@ -101,7 +101,7 @@ function voter(table) {
     perso = p("entrer votre cin :")
     for (let i = 0; i < table.length; i++) {
         for (let j = 0; j < table[i].electeurs.length; j++) {
-            if (perso.toLowerCase() == table[i].electeurs[j].toLowerCase()) {
+            if (perso == table[i].electeurs[j]) {
                 console.log("vous ne pouvez pas voter")
                 return
             }
@@ -110,7 +110,7 @@ function voter(table) {
     let bool = true
     cincard = p("entrer la cin de candidat  :")
     for (let i = 0; i < table.length; i++) {
-        if (cincard.toLowerCase() == table[i].Cin.toLowerCase()) {
+        if (cincard == table[i].Cin) {
             table[i].electeurs.push(perso)
             console.log("votre vote enregistree")
             return
@@ -152,7 +152,7 @@ function flitredepartiepolitique(table) {
     let partiPolitique3
     partiPolitique3 = p("entrer la partie politique pour voir les candidats : ")
     for (let i = 0; i < table.length; i++) {
-        if (partiPolitique3.toLowerCase() === table[i].partiPolitique.toLowerCase()) {
+        if (partiPolitique3 === table[i].partiPolitique) {
             console.log(`#  CANDIDAT : `)
             console.log("CIN : " + table[i].Cin)
             console.log("Name : " + table[i].name)
@@ -176,7 +176,7 @@ function modificationdeparti(table) {
     modification_de_partie = p("modification de partie politique : ")
     let trust = false
     for (let i = 0; i < table.length; i++) {
-        if (table[i].Cin.toLowerCase() == cin_can.toLowerCase()) {
+        if (table[i].Cin == cin_can) {
             table[i].partiPolitique = modification_de_partie
             table[i].electeurs = []
             trust = true
@@ -197,7 +197,7 @@ function modificationage(table) {
     modification_de_age = Number(p("modification de age : "))
     let trust = false
     for (let i = 0; i < table.length; i++) {
-        if (table[i].Cin.toLowerCase() == cin_can1.toLowerCase()) {
+        if (table[i].Cin == cin_can1) {
             table[i].age = modification_de_age
             trust = true
             break
@@ -240,7 +240,7 @@ function Rechercher(table) {
     console.log("pour rechercher un candidat ")
     name_can = p("entrer le nom de candidat : ")
     for (let i = 0; i < table.length; i++) {
-        if (name_can.toLowerCase() == table[i].name.toLowerCase()) {
+        if (name_can == table[i].name) {
             console.log("-------------")
             console.log("CIN : " + table[i].Cin)
             console.log("Name : " + table[i].name)
@@ -381,6 +381,7 @@ do {
                     break;
                 case 2:
                     console.clear
+                    console.log("soignez votre ortographe ")
                     flitredepartiepolitique(candidat)
                     break;
                 default:
@@ -391,6 +392,7 @@ do {
             break;
         case 4:
             console.clear()
+            console.log("soignez votre ortographe ")
             voter(candidat)
 
             break;
@@ -402,9 +404,11 @@ do {
             corriger = Number(p("choisi : "))
             switch (corriger) {
                 case 1:
+                    console.log("soignez votre ortographe ")
                     modificationdeparti(candidat)
                     break;
                 case 2:
+                    console.log("soignez votre ortographe ")
                     modificationage(candidat)
                     break;
                 default:
@@ -414,11 +418,13 @@ do {
             break;
         case 6:
             console.clear()
+            console.log("soignez votre ortographe ")
             Supprimer(candidat)
 
             break;
         case 7:
             console.clear()
+            console.log("soignez votre ortographe ")
             Rechercher(candidat)
 
             break;
