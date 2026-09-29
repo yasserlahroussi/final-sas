@@ -432,10 +432,8 @@ do {
             console.log("sortie")
 
             break;
-        case 9:
-            question9(candidat)
         default:
-
+            console.clear()
             console.log("chois incorrect")
             break;
     }
